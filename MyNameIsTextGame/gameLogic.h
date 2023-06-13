@@ -37,9 +37,20 @@ public:
 class Item
 {
 public:
+	enum class ItemType
+	{
+		
+	};
 	std::string itemName;
 	int value;
 };
+
+class Potion : public Item {
+public:
+	std::string itemName = "체력 포션";
+	int value;
+};
+
 
 void InIt(PPLAYER _pPlayer);
 void MoneyManage(PPLAYER _pPlayer, int amount);
