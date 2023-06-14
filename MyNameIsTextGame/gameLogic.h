@@ -36,25 +36,32 @@ public:
 
 class Item
 {
-public:
+private:
 	enum class ItemType
 	{
-		
+		healingPosition = 0,
+		doubleDice = 1,
+		highDice = 2,
 	};
+public:
+	ItemType itemType;
 	std::string itemName;
 	int value;
 };
 
 class Potion : public Item {
 public:
+	ItemType itemType = 0;
 	std::string itemName = "체력 포션";
-	int value;
+	int value = 10;
 };
 
 
 void InIt(PPLAYER _pPlayer);
 void MoneyManage(PPLAYER _pPlayer, int amount);
-void PlayerAttack(DICE _pDice, PPLAYER _pPlayer, Monster *monster);
+void PlayerHPManage(PPLAYER _pPlayer, int amount);
+void PlayerAttack(DICE _pDice, PPLAYER _pPlayer, Monster* monster);
+void PlayerRest(PPLAYER _pPLayer, Monster* monster);
 void ShowPlayerStat(PLAYER player);
 void MonsterAppearance(Monster* monster, int tempHP);
 void ShowMonsterHP(Monster* monster, int tempHP);

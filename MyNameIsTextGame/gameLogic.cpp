@@ -18,6 +18,12 @@ void MoneyManage(PPLAYER _pPlayer, int amount)
 	_pPlayer->money += amount;
 }
 
+void PlayerHPManage(PPLAYER _pPlayer, int amount)
+{
+	_pPlayer->hp += amount;
+	if (_pPlayer->hp > 30) _pPlayer->hp = 30;
+}
+
 void PlayerAttack(DICE _pDice, PPLAYER _pPlayer, Monster* monster)
 {
 	srand((unsigned int)time(NULL));
@@ -70,6 +76,12 @@ void PlayerAttack(DICE _pDice, PPLAYER _pPlayer, Monster* monster)
 	cout << endl << monster->monsterName << "(이)가 " << int((_pPlayer->money / 100) * sum) << "의 데미지를 입었습니다!" << endl;
 	monster->hp -= int((_pPlayer->money / 100) * sum);
 	EnemyStatUpdate(_pPlayer, monster);
+}
+
+void PlayerRest(PPLAYER _pPLayer, Monster* monster)
+{
+	PlayerHPManage(_pPLayer, 4);
+	EnemyStatUpdate(_pPLayer, monster);
 }
 
 void ShowPlayerStat(PLAYER player)
