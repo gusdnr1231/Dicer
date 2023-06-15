@@ -34,27 +34,27 @@ public:
 	}
 };
 
-class Item
-{
-private:
-	enum class ItemType
-	{
-		healingPosition = 0,
-		doubleDice = 1,
-		highDice = 2,
-	};
-public:
-	ItemType itemType;
-	std::string itemName;
-	int value;
-};
-
-class Potion : public Item {
-public:
-	ItemType itemType = 0;
-	std::string itemName = "체력 포션";
-	int value = 10;
-};
+//class Item
+//{
+//private:
+//	enum class ItemType
+//	{
+//		healingPosition = 0,
+//		doubleDice = 1,
+//		highDice = 2,
+//	};
+//public:
+//	ItemType itemType;
+//	std::string itemName;
+//	int value;
+//};
+//
+//class Potion : public Item {
+//public:
+//	ItemType itemType = 0;
+//	std::string itemName = "체력 포션";
+//	int value = 10;
+//};
 
 
 void InIt(PPLAYER _pPlayer);

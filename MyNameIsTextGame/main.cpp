@@ -78,7 +78,7 @@ int main()
 		}
 		if (input == 3)
 		{
-			PlayerRest(player);
+			PlayerRest(&player, &monster);
 		}
 		if(monster.isDie)
 		{
