@@ -15,12 +15,14 @@ void InIt(PPLAYER _pPlayer)
 
 void MoneyManage(PPLAYER _pPlayer, int amount)
 {
+	cout << "플레이어가 " << amount << "원을 얻었습니다!" << endl;
 	_pPlayer->money += amount;
 }
 
 void PlayerHPManage(PPLAYER _pPlayer, int amount)
 {
 	_pPlayer->hp += amount;
+	cout << "플레이어가 " << amount << "만큼 체력을 회복했습니다!" << endl;
 	if (_pPlayer->hp > 30) _pPlayer->hp = 30;
 }
 
@@ -32,13 +34,13 @@ void PlayerAttack(DICE _pDice, PPLAYER _pPlayer, Monster* monster)
 	int sum = 0, sameCount = 0, straightCount = 0, temp = 0;
 	for (int i = 0; i < 5; i++)
 	{
-		_pDice.dice[i] = rand() % 5 + 1;
+		_pDice.dice[i] = rand() % 6 + 1;
 		sum += _pDice.dice[i];
 	}
 	cout << "주사위가 던져졌습니다! " << endl;
 	ShowDice(_pDice);
 #pragma region Dice Check
-	//Yacht
+	// FullHouse/Yacht
 	for (int i = 0; i < 5; i++)
 	{
 		if (i == 0) temp = _pDice.dice[i];
@@ -124,7 +126,6 @@ void EnemyStatUpdate(PPLAYER _pPlayer, Monster* monster)
 		monster->hp = 0;
 		monster->isDie = true;
 		cout << monster->monsterName << "(이)가 쓰러졌습니다!" << endl;
-		cout << "플레이어가 " << monster->amount << "원을 얻었습니다!" << endl;
 		MoneyManage(_pPlayer, monster->amount);
 	}
 }

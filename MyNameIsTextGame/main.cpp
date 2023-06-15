@@ -76,6 +76,10 @@ int main()
 		{
 			ShowPlayerStat(player);
 		}
+		if (input == 3)
+		{
+			PlayerRest(player);
+		}
 		if(monster.isDie)
 		{
 			stageNum++;
