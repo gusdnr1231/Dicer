@@ -1,7 +1,8 @@
 #pragma once
+#include <iostream>
 #include <string>
-#include <vector>
-#include<Windows.h>
+using namespace std;
+
 typedef struct _player {
 	int hp;
 	int money;
@@ -57,6 +58,9 @@ public:
 //};
 
 
+
+
+void Title();
 void InIt(PPLAYER _pPlayer);
 void MoneyManage(PPLAYER _pPlayer, int amount);
 void PlayerHPManage(PPLAYER _pPlayer, int amount);

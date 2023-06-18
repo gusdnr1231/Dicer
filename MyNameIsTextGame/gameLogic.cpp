@@ -1,10 +1,22 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include<Windows.h>
 #include "gameLogic.h"
+#include <iostream>
+#include <io.h>	
+#include <string>
+#include <fcntl.h>
+#include <vector>
+#include <algorithm>
+#include<windows.h>
 
 using namespace std;
+
+void Title()
+{
+
+	int prevmode = _setmode(_fileno(stdout), _O_U16TEXT);
+
+	int Curmode = _setmode(_fileno(stdout), prevmode);
+
+}
 
 void InIt(PPLAYER _pPlayer)
 {
@@ -30,14 +42,14 @@ void PlayerAttack(DICE _pDice, PPLAYER _pPlayer, Monster* monster)
 {
 	srand((unsigned int)time(NULL));
 	system("cls");
-	cout << "플레이어가 공격을 합니다." << endl;
+	cout << "\t\t플레이어가 공격을 합니다." << endl;
 	int sum = 0, sameCount = 0, straightCount = 0, temp = 0;
 	for (int i = 0; i < 5; i++)
 	{
 		_pDice.dice[i] = rand() % 6 + 1;
 		sum += _pDice.dice[i];
 	}
-	cout << "주사위가 던져졌습니다! " << endl;
+	cout << "\t\t주사위가 던져졌습니다! " << endl;
 	ShowDice(_pDice);
 #pragma region Dice Check
 	// FullHouse/Yacht
@@ -69,34 +81,35 @@ void PlayerAttack(DICE _pDice, PPLAYER _pPlayer, Monster* monster)
 	}
 #pragma endregion
 #pragma region Attack Text
-	if (sameCount == 4) cout << "주사위 4개의 눈이 같습니다! 강한 공격을 합니다! 공격명은 <<Full House>> 입니다!" << endl;
-	else if (sameCount == 5) cout << "모든 주사위의 눈이 같습니다! 가장 강력한 공격을 합니다! 공격명은 <<Yacht>> 입니다!" << endl;
-	else if (straightCount == 4) cout << "4개의 주사위의 눈이 연결되었습니다! 공격명은 <<Small Straight>> 입니다!" << endl;
-	else if (straightCount == 5) cout << "5개의 주사위의 눈이 연결되었습니다! 공격명은 <<Large Straight>> 입니다!" << endl;
-	else cout << "주사위 눈의 합은 " << sum << "입니다!" << endl;
+	if (sameCount == 4) cout << "\t주사위 4개의 눈이 같습니다! 강한 공격을 합니다! 공격명은 <<Full House>> 입니다!" << endl;
+	else if (sameCount == 5) cout << "\t모든 주사위의 눈이 같습니다! 가장 강력한 공격을 합니다! 공격명은 <<Yacht>> 입니다!" << endl;
+	else if (straightCount == 4) cout << "\t4개의 주사위의 눈이 연결되었습니다! 공격명은 <<Small Straight>> 입니다!" << endl;
+	else if (straightCount == 5) cout << "\t5개의 주사위의 눈이 연결되었습니다! 공격명은 <<Large Straight>> 입니다!" << endl;
+	else cout << "\t주사위 눈의 합은 " << sum << "입니다!" << endl;
 #pragma endregion
-	cout << endl << monster->monsterName << "(이)가 " << int((_pPlayer->money / 100) * sum) << "의 데미지를 입었습니다!" << endl;
-	monster->hp -= int((_pPlayer->money / 100) * sum);
+	cout << endl << "\t" << monster->monsterName << "(이)가 " << sum * (_pPlayer->money / 100) << "의 데미지를 입었습니다!" << endl;
+	monster->hp -= sum * (_pPlayer->money / 100);
 	EnemyStatUpdate(_pPlayer, monster);
 }
 
 void PlayerRest(PPLAYER _pPLayer, Monster* monster)
 {
-	PlayerHPManage(_pPLayer, 4);
+	srand((unsigned int)time(NULL));
+	PlayerHPManage(_pPLayer, rand() % 3 + 3);
 	EnemyStatUpdate(_pPLayer, monster);
 }
 
 void ShowPlayerStat(PLAYER player)
 {
 	system("cls");
-	cout << 
-		endl << "\t==============================" << 
-		endl << "\t=      플레이어 상태         =" << 
-		endl << "\t=	  체력: " << player.hp << "	     =" << 
+	cout <<
+		endl << "\t==============================" <<
+		endl << "\t=      플레이어 상태         =" <<
+		endl << "\t=	  체력: " << player.hp << "	     =" <<
 		endl << "\t=    소지금(공격력):" << player.money << "원    =" <<
-		endl << "\t==============================" << 
+		endl << "\t==============================" <<
 		endl << "\t=        데미지 공식         =" <<
-		endl << "\t=  (소지금 / 100) * 주사위   =" << 
+		endl << "\t= (소지금 / 100) * 주사위 눈 =" <<
 		endl << "\t==============================" <<
 		endl;
 }
@@ -117,8 +130,8 @@ void EnemyStatUpdate(PPLAYER _pPlayer, Monster* monster)
 	if (monster->hp > 0)
 	{
 		monster->curWaitTurn++;
-		if(monster->curWaitTurn != monster->maxWaitTurn)
-		cout << endl << monster->monsterName << "(이)가 " << monster->maxWaitTurn - monster->curWaitTurn << "턴 뒤에 공격합니다!" << endl;
+		if (monster->curWaitTurn != monster->maxWaitTurn)
+			cout << endl << monster->monsterName << "(이)가 " << monster->maxWaitTurn - monster->curWaitTurn << "턴 뒤에 공격합니다!" << endl;
 		else if (monster->curWaitTurn == monster->maxWaitTurn) EnemyAttack(_pPlayer, monster);
 	}
 	if (monster->hp <= 0)
@@ -149,6 +162,7 @@ void EnemyAttack(PPLAYER _pPlayer, Monster* monster)
 	_pPlayer->hp -= monster->attack;
 	monster->curWaitTurn = 0;
 	cout << "플레이어가 " << monster->attack << "의 데미지를 입었습니다!" << endl;
+	if (_pPlayer->hp <= 0) _pPlayer->isDie = true;
 }
 
 string diceEyes[6][5] =
