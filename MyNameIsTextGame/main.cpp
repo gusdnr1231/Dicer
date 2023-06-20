@@ -10,20 +10,20 @@ using namespace std;
  
 string monsterNames[15] = 
 {
-	"재빠르지만 약한 고블린", //0
-	"단단하고 굼뜬 가고일", //1
+	"재빠른 고블린", //0
+	"단단한 가고일", //1
 	"엄청 강한 슬라임", //2
-	"겁이 많은 미노타우르스", //3
+	"겁쟁이 미노타우르스", //3
 	"굶주린 거대 오크", //4
-	"수상할 정도로 돈이 많은 늑대", //5
-	"돈은 없지만 신사적인 늑대 인간", //6
+	"왜인지 돈이 많은 늑대", //5
+	"신사적인 거지 늑대 인간", //6
 	"도박쟁이 임프", //7
 	"성질 급한 마법사", //8
 	"어딘가 달라진 슬라임", //9
 	"날개가 찢어진 드래곤", //10
 	"맷집이 약한 스켈레톤", //11
 	"맷집만 강한 좀비", //12
-	"왜 여기 있는지 모르겠는 전 용사", //13
+	"마왕한테 반해버린 전 용사", //13
 	"이 세상 최고의 악당 마왕" //14
 };
 
@@ -37,7 +37,7 @@ int monsterStats[15][4]
 	{1450, 9, 120, 6}, //4
 	{400, 4, 170, 3}, //5
 	{800, 5, 60, 7}, //6
-	{220, rand() % 6 + 1, rand() % 6 + 1, 4}, //7
+	{220, 0, 0, 4}, //7
 	{300, 3, 40, 2}, //8
 	{420, 2, 70, 3}, //9
 	{2000, 6, 140, 3}, //10
@@ -49,7 +49,6 @@ int monsterStats[15][4]
 
 int main()
 {
-	system("mode con cols=200 lines=100");
 	srand((unsigned int)time(NULL));
 	int monsterTempHP = 0, monsterNum = 0, stageNum = 1;
 	int input = 0;
@@ -63,11 +62,12 @@ int main()
 		monsterStats[0][2],
 		monsterStats[0][3], &monsterTempHP);
 
+	cout << "\t\t\t" << stageNum << "층입니다." << endl;
 	MonsterAppearance(&monster, monsterTempHP);
 	while (input != -1 && player.isDie != true)
 	{
-		cout << endl << "\t\t<<1 : 공격>>" << endl << "\t\t<<2 : 상태>>" << endl << "\t\t<<3 : 휴식>>" << endl;
-		cout << "\t\t행동 번호: ";
+		cout << endl << "\t\t       <<1 : 공격>>" << endl << "\t\t       <<2 : 상태>>" << endl << "\t\t       <<3 : 휴식>>" << endl;
+		cout << "\t\t       행동 번호: ";
 		cin >> input;
 		if (input == 1)
 		{
@@ -84,8 +84,15 @@ int main()
 		}
 		if(monster.isDie)
 		{
+			Sleep(1500);
 			stageNum++;
-			if(stageNum >= 2 && stageNum <= 4)
+			if (stageNum == 15) break;
+			cout << "\t\t다음 층으로 가고 있습니다." << endl;
+			Sleep(1500);
+			system("cls");
+			cout << "\t\t\t" << stageNum << "층입니다." << endl;
+			Sleep(500);
+			/*if(stageNum >= 2 && stageNum <= 4)
 			{
 				monsterNum = rand() % 4 + 1;
 				SetEnemy(&monster, 
@@ -125,14 +132,24 @@ int main()
 			}
 			if(stageNum <= 11)
 			{
+				
+			}*/
+			SetEnemy(&monster,
+				monsterNames[stageNum],
+				monsterStats[stageNum][0],
+				monsterStats[stageNum][1],
+				monsterStats[stageNum][2],
+				monsterStats[stageNum][3], &monsterTempHP);
+			if(stageNum == 7)
+			{
 				SetEnemy(&monster,
 					monsterNames[stageNum],
 					monsterStats[stageNum][0],
-					monsterStats[stageNum][1],
-					monsterStats[stageNum][2],
+					rand() % 6 + 1,
+					(rand() % 6 + 1) * 20,
 					monsterStats[stageNum][3], &monsterTempHP);
 			}
-			if (stageNum == 15) break;
+			MonsterAppearance(&monster, monsterTempHP);
 		}
 	}
 	system("cls");
@@ -153,6 +170,6 @@ int main()
 		cout << "\t용사: 꼬우면 너도 주사위 굴리던가." << endl;
 		Sleep(100);
 		cout << "\t그렇게 용사는... 마왕을 물리치고 여신에게 소원으로 평생 써도 남을 만큼의 돈을 달라고 했답니다!" << endl;
-		cout << "플레이어가 999,999,999,999,999,999,999,999,999원을 얻었습니다!" << endl;
+		cout << "\t플레이어가 999,999,999,999,999,999,999,999,999원을 얻었습니다!" << endl;
 	}
 }

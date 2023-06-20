@@ -12,10 +12,6 @@ using namespace std;
 void Title()
 {
 
-	int prevmode = _setmode(_fileno(stdout), _O_U16TEXT);
-
-	int Curmode = _setmode(_fileno(stdout), prevmode);
-
 }
 
 void InIt(PPLAYER _pPlayer)
@@ -27,14 +23,15 @@ void InIt(PPLAYER _pPlayer)
 
 void MoneyManage(PPLAYER _pPlayer, int amount)
 {
-	cout << "플레이어가 " << amount << "원을 얻었습니다!" << endl;
+	cout << "\t플레이어가 " << amount << "원을 얻었습니다!" << endl;
 	_pPlayer->money += amount;
 }
 
 void PlayerHPManage(PPLAYER _pPlayer, int amount)
 {
+	system("cls");
 	_pPlayer->hp += amount;
-	cout << "플레이어가 " << amount << "만큼 체력을 회복했습니다!" << endl;
+	cout << "\t플레이어가 " << amount << "만큼 체력을 회복했습니다!" << endl;
 	if (_pPlayer->hp > 30) _pPlayer->hp = 30;
 }
 
@@ -49,7 +46,7 @@ void PlayerAttack(DICE _pDice, PPLAYER _pPlayer, Monster* monster)
 		_pDice.dice[i] = rand() % 6 + 1;
 		sum += _pDice.dice[i];
 	}
-	cout << "\t\t주사위가 던져졌습니다! " << endl;
+	cout << "\t\t 주사위가 던져졌습니다! " << endl;
 	ShowDice(_pDice);
 #pragma region Dice Check
 	// FullHouse/Yacht
@@ -81,11 +78,11 @@ void PlayerAttack(DICE _pDice, PPLAYER _pPlayer, Monster* monster)
 	}
 #pragma endregion
 #pragma region Attack Text
-	if (sameCount == 4) cout << "\t주사위 4개의 눈이 같습니다! 강한 공격을 합니다! 공격명은 <<Full House>> 입니다!" << endl;
-	else if (sameCount == 5) cout << "\t모든 주사위의 눈이 같습니다! 가장 강력한 공격을 합니다! 공격명은 <<Yacht>> 입니다!" << endl;
-	else if (straightCount == 4) cout << "\t4개의 주사위의 눈이 연결되었습니다! 공격명은 <<Small Straight>> 입니다!" << endl;
-	else if (straightCount == 5) cout << "\t5개의 주사위의 눈이 연결되었습니다! 공격명은 <<Large Straight>> 입니다!" << endl;
-	else cout << "\t주사위 눈의 합은 " << sum << "입니다!" << endl;
+	if (sameCount == 4) cout << "주사위 4개의 눈이 같습니다! 공격명은 <<Full House>> 입니다!" << endl;
+	else if (sameCount == 5) cout << "모든 주사위의 눈이 같습니다! 공격명은 <<Yacht>> 입니다!" << endl;
+	else if (straightCount == 4) cout << "4개의 주사위의 눈이 연결되었습니다! 공격명은 <<Small Straight>> 입니다!" << endl;
+	else if (straightCount == 5) cout << "5개의 주사위의 눈이 연결되었습니다! 공격명은 <<Large Straight>> 입니다!" << endl;
+	else cout << "\t\t주사위 눈의 합은 " << sum << "입니다!" << endl;
 #pragma endregion
 	cout << endl << "\t" << monster->monsterName << "(이)가 " << sum * (_pPlayer->money / 100) << "의 데미지를 입었습니다!" << endl;
 	monster->hp -= sum * (_pPlayer->money / 100);
@@ -116,13 +113,13 @@ void ShowPlayerStat(PLAYER player)
 
 void MonsterAppearance(Monster* monster, int tempHP)
 {
-	cout << "\t" << monster->monsterName << "이 나타났다!" << endl;
+	cout << "\t\t" << monster->monsterName << "이 나타났다!" << endl;
 	ShowMonsterHP(monster, tempHP);
 }
 
 void ShowMonsterHP(Monster* monster, int tempHP)
 {
-	cout << "\t" << monster->monsterName << "의 HP: " << monster->hp << "/" << tempHP << endl;
+	cout << "\t\t" << monster->monsterName << "의 HP: " << monster->hp << "/" << tempHP << endl;
 }
 
 void EnemyStatUpdate(PPLAYER _pPlayer, Monster* monster)
@@ -131,14 +128,14 @@ void EnemyStatUpdate(PPLAYER _pPlayer, Monster* monster)
 	{
 		monster->curWaitTurn++;
 		if (monster->curWaitTurn != monster->maxWaitTurn)
-			cout << endl << monster->monsterName << "(이)가 " << monster->maxWaitTurn - monster->curWaitTurn << "턴 뒤에 공격합니다!" << endl;
+			cout << endl << "\t" << monster->monsterName << "(이)가 " << monster->maxWaitTurn - monster->curWaitTurn << "턴 뒤에 공격합니다!" << endl;
 		else if (monster->curWaitTurn == monster->maxWaitTurn) EnemyAttack(_pPlayer, monster);
 	}
 	if (monster->hp <= 0)
 	{
 		monster->hp = 0;
 		monster->isDie = true;
-		cout << monster->monsterName << "(이)가 쓰러졌습니다!" << endl;
+		cout << "\t" << monster->monsterName << "(이)가 쓰러졌습니다!" << endl;
 		MoneyManage(_pPlayer, monster->amount);
 	}
 }
@@ -158,10 +155,10 @@ int ReturnMaxHP(int hp)
 
 void EnemyAttack(PPLAYER _pPlayer, Monster* monster)
 {
-	cout << monster->monsterName << "(이)가 공격합니다!" << endl;
+	cout << "\t" << monster->monsterName << "(이)가 공격합니다!" << endl;
 	_pPlayer->hp -= monster->attack;
 	monster->curWaitTurn = 0;
-	cout << "플레이어가 " << monster->attack << "의 데미지를 입었습니다!" << endl;
+	cout << "\t플레이어가 " << monster->attack << "의 데미지를 입었습니다!" << endl;
 	if (_pPlayer->hp <= 0) _pPlayer->isDie = true;
 }
 
