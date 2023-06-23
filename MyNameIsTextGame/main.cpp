@@ -90,48 +90,6 @@ int main()
 			system("cls");
 			cout << "\t\t\t" << stageNum << "ÃşÀÔ´Ï´Ù." << endl;
 			Sleep(500);
-			/*if(stageNum >= 2 && stageNum <= 4)
-			{
-				monsterNum = rand() % 4 + 1;
-				SetEnemy(&monster, 
-					monsterNames[monsterNum], 
-					monsterStats[monsterNum][0],
-					monsterStats[monsterNum][1],
-					monsterStats[monsterNum][2], 
-					monsterStats[monsterNum][3], &monsterTempHP);
-			}
-			if(stageNum == 5)
-			{
-				SetEnemy(&monster,
-					monsterNames[4],
-					monsterStats[4][0],
-					monsterStats[4][1],
-					monsterStats[4][2],
-					monsterStats[4][3], &monsterTempHP);
-			}
-			if(stageNum >= 6 && stageNum <= 9)
-			{
-				monsterNum = rand() % 4 + 5;
-				SetEnemy(&monster,
-					monsterNames[monsterNum],
-					monsterStats[monsterNum][0],
-					monsterStats[monsterNum][1],
-					monsterStats[monsterNum][2],
-					monsterStats[monsterNum][3], &monsterTempHP);
-			}
-			if(stageNum == 10)
-			{
-				SetEnemy(&monster,
-					monsterNames[10],
-					monsterStats[10][0],
-					monsterStats[10][1],
-					monsterStats[10][2],
-					monsterStats[10][3], &monsterTempHP);
-			}
-			if(stageNum <= 11)
-			{
-				
-			}*/
 			SetEnemy(&monster,
 				monsterNames[stageNum],
 				monsterStats[stageNum][0],
