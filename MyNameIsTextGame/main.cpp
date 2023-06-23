@@ -1,9 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <list>
-#include <Windows.h>
 #include <conio.h>
+#include <Windows.h>
 #include "gameLogic.h"
 
 using namespace std;
@@ -51,7 +50,7 @@ int main()
 {
 	srand((unsigned int)time(NULL));
 	int monsterTempHP = 0, monsterNum = 0, stageNum = 1;
-	int input = 0;
+	char input = NULL;
 	PLAYER player = { };
 	DICE dice = { };
 	Monster monster;
@@ -66,21 +65,20 @@ int main()
 	MonsterAppearance(&monster, monsterTempHP);
 	while (input != -1 && player.isDie != true)
 	{
-		cout << endl << "\t\t       <<1 : 공격>>" << endl << "\t\t       <<2 : 상태>>" << endl << "\t\t       <<3 : 휴식>>" << endl;
-		cout << "\t\t       행동 번호: ";
-		cin >> input;
-		if (input == 1)
+		cout << endl << "\t\t       <<Q : 공격>>" << endl << "\t\t       <<W : 휴식>>" << endl << "\t\t       <<E : 상태>>" << endl;
+		input = _getch();
+		if (input == 'Q' || input == 'q')
 		{
 			PlayerAttack(dice, &player, &monster);
 			ShowMonsterHP(&monster, monsterTempHP);
 		}
-		if(input == 2)
-		{
-			ShowPlayerStat(player);
-		}
-		if (input == 3)
+		if(input == 'W' || input == 'w')
 		{
 			PlayerRest(&player, &monster);
+		}
+		if (input == 'E' || input == 'e')
+		{
+			ShowPlayerStat(player);
 		}
 		if(monster.isDie)
 		{

@@ -57,10 +57,6 @@ public:
 //	int value = 10;
 //};
 
-
-
-
-void Title();
 void InIt(PPLAYER _pPlayer);
 void MoneyManage(PPLAYER _pPlayer, int amount);
 void PlayerHPManage(PPLAYER _pPlayer, int amount);

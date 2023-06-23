@@ -5,14 +5,11 @@
 #include <fcntl.h>
 #include <vector>
 #include <algorithm>
+
 #include<windows.h>
-
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 using namespace std;
-
-void Title()
-{
-
-}
 
 void InIt(PPLAYER _pPlayer)
 {
